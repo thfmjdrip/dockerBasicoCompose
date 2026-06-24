@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relógio Pré-Histórico</title>
+    <style>
+        /* Importando uma fonte rústica/impactante para o relógio */
+        @import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&family=Permanent+Marker&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle, #2c1a10 20%, #0a0502 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Permanent Marker', cursive;
+            perspective: 1000px;
+        }
+
+        /* O fundo da caverna com texturas e pinturas simuladas */
+        .caverna-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #1a0f0a;
+            /* Simulando relevo de pedra e pinturas rupestres usando SVG inline de mamutes/caçadores */
+            background-image: 
+                radial-gradient(rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.8)),
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><text x='10' y='50' fill='rgba(139,0,0,0.15)' font-size='30'>🦣</text><text x='60' y='30' fill='rgba(139,0,0,0.15)' font-size='20'>🏹</text><text x='50' y='80' fill='rgba(139,0,0,0.15)' font-size='25'>🐾</text></svg>");
+            background-size: cover, 200px 200px;
+            z-index: 1;
+        }
+
+        /* Efeito de luz do fogo bruxuleante no fundo */
+        .fogo-brilho {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,100,0,0.25) 0%, rgba(226,88,34,0.05) 50%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            z-index: 2;
+            animation: queimar 0.15s infinite alternate;
+            pointer-events: none;
+        }
+
+        /* Monólito de Pedra Central */
+        .pedra-container {
+            position: relative;
+            z-index: 3;
+            background: #3a3532;
+            padding: 40px 60px;
+            border-radius: 30px;
+            box-shadow: 
+                inset 5px 5px 15px rgba(255,255,255,0.1),
+                inset -5px -5px 15px rgba(0,0,0,0.7),
+                0 0 50px rgba(0, 0, 0, 0.9),
+                0 0 40px rgba(226, 88, 34, 0.3);
+            border: 8px solid #2b2624;
+            text-align: center;
+            transform: rotateX(10deg) rotateY(-5deg);
+            background-image: linear-gradient(135deg, #443e3b 25%, transparent 25%) -50px 0,
+                              linear-gradient(225deg, #443e3b 25%, transparent 25%) -50px 0,
+                              linear-gradient(45deg, #443e3b 25%, transparent 25%),
+                              linear-gradient(335deg, #443e3b 25%, transparent 25%);
+            background-size: 4px 4px;
+        }
+
+        /* Moldura de "Pinturas Rupestres" ao redor do relógio */
+        .pinturas-moldura {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            border: 4px dashed rgba(165, 42, 42, 0.4);
+            border-radius: 35px;
+            pointer-events: none;
+        }
+
+        .pinturas-moldura::before {
+            content: '🔥 🍖 🪵 🦖';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            letter-spacing: 15px;
+            opacity: 0.7;
+        }
+
+        .pinturas-moldura::after {
+            content: '🖐🏿 🦴 🦅 🖐🏾';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            letter-spacing: 15px;
+            opacity: 0.7;
+        }
+
+        /* O Relógio Digital */
+        .relogio {
+            font-family: 'Rubik Glitch', system-ui;
+            font-size: 5.5rem;
+            color: #ffdd67;
+            text-shadow: 
+                0 0 10px #ff5500, 
+                0 0 20px #ff5500, 
+                0 0 40px #ff1100,
+                0 0 60px #ff1100;
+            letter-spacing: 5px;
+            animation: pulso-fogo 0.3s infinite alternate;
+            padding: 10px;
+        }
+
+        /* Subtítulo ou data rústica */
+        .data-caverna {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            color: #d2b48c;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        /* Animações */
+        @keyframes queimar {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.9; }
+            100% { transform: scale(1.05) translate(-5px, 5px); opacity: 1; }
+        }
+
+        @keyframes pulso-fogo {
+            0% {
+                text-shadow: 0 0 10px #ff7700, 0 0 20px #ff5500, 0 0 30px #ff1100;
+                color: #ffea85;
+            }
+            100% {
+                text-shadow: 0 0 15px #ff4400, 0 0 30px #ff3300, 0 0 50px #aa0000;
+                color: #ffaa33;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="caverna-bg"></div>
+    <div class="fogo-brilho"></div>
+
+    <div class="pedra-container">
+        <div class="pinturas-moldura"></div>
+        <div class="relogio" id="relogio">00:00:00</div>
+        <div class="data-caverna" id="data">Era dos Homens da Caverna</div>
+    </div>
+
+    <script>
+        function atualizarRelogio() {
+            const agora = new Date();
+            
+            // Obtendo horas, minutos e segundos
+            let horas = agora.getHours();
+            let minutos = agora.getMinutes();
+            let segundos = agora.getSeconds();
+
+            // Formatando para ter sempre dois dígitos (ex: 05 ao invés de 5)
+            horas = horas < 10 ? '0' + horas : horas;
+            minutos = minutos < 10 ? '0' + minutos : minutos;
+            segundos = segundos < 10 ? '0' + segundos : segundos;
+
+            // Inserindo no HTML
+            document.getElementById('relogio').textContent = `${horas}:${minutos}:${segundos}`;
+
+            // Atualizando uma "data" estilizada para complementar o clima
+            const diasSemana = ['Sol nascente', 'Lua minguante', 'Dia da Caça', 'Grande Mamute', 'Fogo Sagrado', 'Dia da Pesca', 'Sol poente'];
+            const diaNome = diasSemana[agora.getDay()];
+            document.getElementById('data').textContent = `${diaNome} • Ciclo Atual`;
+        }
+
+        // Executa a função a cada 1 segundo (1000 milissegundos)
+        setInterval(atualizarRelogio, 1000);
+
+        // Executa imediatamente ao abrir a página
+        atualizarRelogio();
+    </script>
+</body>
+</html>

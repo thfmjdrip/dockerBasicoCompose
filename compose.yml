@@ -1,0 +1,13 @@
+services:
+  apache-httpd:
+    image: httpd:alpine3.24
+    ports:
+      - 2020:80
+    volumes:
+      - ./index.html:/usr/local/apache2/htdocs/index.html
+    networks:
+      - minha-rede
+
+networks:
+  minha-rede:
+    driver: bridge
